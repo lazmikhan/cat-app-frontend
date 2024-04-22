@@ -1,0 +1,23 @@
+.link-hover:hover{
+    border-color: yellow;
+    background-color: #ffb21772;
+    z-index: 2;
+}
+.link-hover {
+
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 2;
+  }
+
+  .is-active{
+    border-color: yellow;
+    background-color: #FFB017; 
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 2;
+  }
+  .color-head{
+    color:#FFB017;
+    /* color:rgb(196, 191, 191)  */
+  }

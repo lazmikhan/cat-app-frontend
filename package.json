@@ -3,6 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emailjs/browser": "^4.3.1",
+    "@emotion/react": "^11.11.4",
+    "@mantine/carousel": "^7.6.1",
+    "@mantine/charts": "^7.6.1",
+    "@mantine/core": "^7.6.1",
+    "@mantine/dates": "^7.6.1",
+    "@mantine/form": "^7.6.1",
+    "@mantine/hooks": "^7.6.1",
+    "@mantine/modals": "^7.6.1",
+    "@mantine/notifications": "^7.6.1",
+    "@react-email/components": "0.0.15",
+    "@tabler/icons-react": "^2.47.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -10,9 +22,18 @@
     "@types/node": "^16.18.86",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
+    "axios": "^1.6.7",
+    "dayjs": "^1.11.10",
+    "embla-carousel-react": "^8.0.0",
+    "localforage": "^1.10.0",
+    "match-sorter": "^6.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-email": "2.1.0",
+    "react-router-dom": "^6.22.2",
     "react-scripts": "5.0.1",
+    "recharts": "^2.12.2",
+    "sort-by": "^1.2.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -20,7 +41,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "email": "email dev"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +61,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "css-loader": "^6.10.0",
+    "postcss": "^8.4.35",
+    "postcss-preset-mantine": "^1.13.0",
+    "postcss-simple-vars": "^7.0.1",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
   }
 }
