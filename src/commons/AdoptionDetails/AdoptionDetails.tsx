@@ -104,7 +104,7 @@ export default function AdoptionDetails() {
        <span className='color-head'>Location:</span> {adoptionPost.location}
        <Divider my="md" />
      
-       <span className='color-head'>Posted At:</span> {convertDate(adoptionPost.createdAt)}
+       <span className='color-head'>Posted At:</span> {adoptionPost.createdAt.slice(0,10)}
     
   
       </Text>

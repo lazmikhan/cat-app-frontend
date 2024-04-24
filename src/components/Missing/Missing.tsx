@@ -17,7 +17,7 @@ interface AdoptionPost {
   name: String;
 }
 export default function Missing() {
-  const itemsPerPage = 2;
+  const itemsPerPage = 10;
   const [activePage, setPage] = useState(1);
   const [adoptionPosts, setAdoptionPosts] = useState<AdoptionPost[]>([]);
   const [visiblePosts, setVisiblePosts] = useState<AdoptionPost[]>([]);
