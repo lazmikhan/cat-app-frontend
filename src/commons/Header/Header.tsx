@@ -10,11 +10,12 @@ const data = [
   {  label: 'Adopt', to:'/adopt'},
   {  label: 'Missing Post', to:'/missing' },
   {  label: 'Add Post' , to:'/add-post'},
-  {  label: 'Shop' , to:'/shop'},
-  { label: 'Doctor' , to:'/doctor'},
+
+  { label: 'Veterinarian' , to:'/doctor'},
   { label: 'Profile', to:'/profile'},
   {  label: 'Manage', to:'/manage'},
   {  label: 'Donate', to:'/donate'},
+  {  label: 'Shop' , to:'/shop'},
 ];
 
 function Header({children}: React.PropsWithChildren<{}>) {

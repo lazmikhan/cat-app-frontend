@@ -28,6 +28,12 @@ export default function Profile() {
       mobileNo:'',
       name:'',
     },
+    validate: {
+      email: (value) => (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? null : 'Invalid email'),
+      name: (value) => (/.{3,}/.test(value) ? null:'name must be atleast 3 letters' ),
+      address: (value) => ( /.{20,}/.test(value) ? null: 'address must be atleast 20 letters' ),
+      mobileNo: (value) => ( /.{2,}/.test(value) ? null: 'Invalid mobile number' ),
+    },
 
    
   });

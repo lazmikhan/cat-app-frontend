@@ -12,7 +12,7 @@ export default function Login() {
   const Navigate = useNavigate();
     const [users, setUsers]= useState([]);
 
-  const form = useForm({
+  const form:any = useForm({
     initialValues: {
       email: '',
       password:'',
@@ -25,6 +25,8 @@ export default function Login() {
   });
 const submitLogin =async()=>{
 
+  if(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(form.values.email))
+{
   console.log(form.values)
   const result = await   loginUser(form.values);
  
@@ -41,7 +43,7 @@ const submitLogin =async()=>{
   else{
  
    notifications.show({
-     title: 'Registration Failed',
+     title: 'Login Failed',
      message: result?.message?.message,
      autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
      color: 'red', // Set the notification color (optional)
@@ -50,6 +52,15 @@ const submitLogin =async()=>{
   }
   console.log(result)
 
+}
+else{
+  notifications.show({
+    title: 'Invalid Email',
+    message: "Example : lazmikhan@gmail.com",
+    autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
+    color: 'red', // Set the notification color (optional)
+  });
+}
 
 }
   return (
@@ -70,7 +81,7 @@ style={{display:'flex' }}
  
   <Box maw={340} mx="auto">
   <h1 >Please Login to Continue</h1>
-      <form onSubmit={form.onSubmit((values) => {
+      <form onSubmit={form.onSubmit((values:any) => {
      submitLogin()
       })}>
         <TextInput
@@ -87,11 +98,7 @@ style={{display:'flex' }}
       placeholder="Your Password"
       {...form.getInputProps('password')}
     />
-        <Checkbox
-          mt="md"
-          label="I agree to sell my privacy"
-          {...form.getInputProps('termsOfService', { type: 'checkbox' })}
-        />
+        
     <Link to={'/'}>Forgot Password?</Link>
         <Group justify="flex-end" mt="md">
         <Button  type='submit' style={{width:'100%'}} variant="filled" color="rgba(66, 66, 66, 1)">Sign Up</Button>

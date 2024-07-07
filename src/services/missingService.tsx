@@ -36,16 +36,8 @@ const getAllMissingPostsById = async (id: any) => {
 };
 const postMissing = async (formData: any) => {
   try {
-    const form = {
-      name: "found pet sabt",
-      description:
-        "My lovely pet was found yesterday. She is a small brown dog with a white spot on her tail.",
-      status: "found",
-      images: [
-        "1709136821417-1000000001-WIN_20220429_17_18_12_Pro.jpg",
-        "1709136821417-1000000001-WIN_20220429_17_18_12_Pro.jpg",
-      ],
-    };
+    console.log(formData)
+  
     const response = await axios.post(
       "http://localhost:5000/api/v1/missingPosts",
       formData,

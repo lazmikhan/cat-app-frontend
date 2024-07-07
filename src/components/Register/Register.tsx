@@ -14,34 +14,55 @@ export default function Register() {
   const form = useForm({
     initialValues: {
       email: '',
-      password:''
+      password:'',
+      mobileNo:'',
+      address:'',
+      name:''
     },
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      name: (value) => (/.{6,}/.test(value) ? null:'name cannot be blank' ),
+      address: (value) => ( /.{20,}/.test(value) ? null: 'address must be atleast 20 letters' ),
+      password: (value) => (/.{6,}/.test(value) ? null : 'password must be 6 or more in length'),
     },
   });
 const submitRegistration =async()=>{
 
- console.log(form.values)
- const result = await   postUser(form.values);
+  
+  if(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(form.values.email)){
+    
+    console.log(form.values)
+    if(form.values.mobileNo||form.values.address){
 
+    }
+    const result = await   postUser(form.values);
+   
+   
+    if(result.data?._id)
+    {
+     Navigate('/');
+    }
+    else{
+   
+     notifications.show({
+       title: 'Registration Failed',
+       message: result.message.message,
+       autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
+       color: 'red', // Set the notification color (optional)
+     });
+    
+    }
+    console.log(result)
+  }else{
+    notifications.show({
+      title: 'Invalid Email',
+      message: "Example : lazmikhan@gmail.com",
+      autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
+      color: 'red', // Set the notification color (optional)
+    });
+  }
 
- if(result.data?._id)
- {
-  Navigate('/');
- }
- else{
-
-  notifications.show({
-    title: 'Registration Failed',
-    message: result.message.message,
-    autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
-    color: 'red', // Set the notification color (optional)
-  });
- 
- }
- console.log(result)
 }
   return (
     <div   className='Madimi' style={{maxHeight: "100vh"}}>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Pagination } from "@mantine/core";
+import { Button, Container, Grid, Input, Pagination } from "@mantine/core";
 import { getAllMissingPosts } from "../../services/missingService";
 import MissingCard from "../../commons/MissingCard/MissingCard";
 import { convertDate } from "../../commons/DateConverter/DateConverter";
+import { IconSearch } from "@tabler/icons-react";
 interface AdoptionPost {
   _id: string; // Adjust the type based on the name?
   contactNumber?: String;
@@ -15,8 +16,28 @@ interface AdoptionPost {
   createdAt: string;
   description?: String;
   name: String;
+  missingLocation:string
 }
 export default function Missing() {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = () => {
+    const filteredResults:any = adoptionPosts.filter(item =>
+      item.missingLocation?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setVisiblePosts(filteredResults)
+  };
+
+  const handleInputChange = (event:any) => {
+    setSearchTerm(event.target.value);
+   
+  };
+
+  const handleKeyPress = (event:any) => {
+  
+      handleSearch();
+    
+  };
   const itemsPerPage = 10;
   const [activePage, setPage] = useState(1);
   const [adoptionPosts, setAdoptionPosts] = useState<AdoptionPost[]>([]);
@@ -46,6 +67,34 @@ export default function Missing() {
   };
   return (
     <div>
+         <Container style={{
+        position:'relative',
+        display:'flex',
+        justifyContent:'center'
+      }}>
+<span>
+<span style={{
+       
+       position:'absolute',
+       zIndex:'1',
+       top:'5px',
+       color:'grey'
+      
+     }}> <IconSearch/> </span><Input style={{
+       paddingLeft: "40px",
+       width:'800px'
+     }} placeholder="Search by Place...."
+     value={searchTerm}
+     onChange={handleInputChange}
+   
+     />
+</span>
+<br />
+<br />
+      <Button  style={{
+        backgroundColor:'#FFB017'
+      }} onClick={handleKeyPress}>Search</Button>
+      </Container>
       <Grid>
         {visiblePosts.map((post) => (
           <Grid.Col span={3}>

@@ -226,7 +226,7 @@ Navigate('/');
     <h1>
     <Link className='Madimi' style={{color:'white',
         textDecoration:'none'
-       }} to={'dashboard'}>Dashbaord</Link>
+       }} to={'dashboard'}>All Posts</Link>
     </h1>
      <h1>
      <Link onClick={logoutUser} className='Madimi' style={{color:'white',
@@ -252,7 +252,7 @@ Navigate('/');
        
 <div className='Madimi'>
 <div style={{backgroundColor:'rgb(238, 234, 234)' ,padding:'5px' , borderRadius:'5px'}}>
-<h1 className='color-head'>Adoption Posts Report</h1>
+<h1 className='color-head'>Adoption Posts Report :{adoptions.length}</h1>
 <div style={{display:'flex', justifyContent:'space-around'}}>
  <PieChart withLabelsLine labelsPosition="outside" labelsType="percent" withLabels data={data} />
        <div>
@@ -273,7 +273,7 @@ Navigate('/');
 <Divider></Divider>
 <br />
 <div style={{backgroundColor:'rgb(238, 234, 234)' ,padding:'5px' , borderRadius:'5px'}}>
-<h1 className='color-head'>Missing Post Reports</h1>
+<h1 className='color-head'>Missing Post Reports : {totalFound + totalNotFound}</h1>
  <div style={{display:'flex', justifyContent:'space-around'}}>
  <PieChart withLabelsLine labelsPosition="outside" labelsType="percent" withLabels data={missingData} />
        <div>

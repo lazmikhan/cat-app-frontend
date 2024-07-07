@@ -79,9 +79,22 @@ export default function Doctor() {
   };
   const formJs: any = useRef();
 
+  const patientNameRef : any =useRef();
+  const patientAppointmentDateRef : any =useRef();
+  const appointmentReasonRef : any =useRef();
   const sendEmail = (e:any) => {
     e.preventDefault();
-
+if(patientNameRef.current.value==''||patientAppointmentDateRef.current.value==''||patientNameRef.current.value=='')
+  {
+    notifications.show({
+      title: "Fill all the fields",
+      message: "",
+      autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
+      color: "yellow", // Set the notification color (optional)
+    });
+    return;
+  }
+   
     emailjs
       .sendForm('service_xhd4uum', 'template_rrqsdry', formJs.current, {
         publicKey: 'fXAQrCrNnk-e_staU',
@@ -109,7 +122,10 @@ export default function Doctor() {
   return (
     <div className="Madimi">
       <Box maw={340} mx="auto">
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => 
+          
+          
+          console.log(values))}>
           <Select
        
             onChange={hospitalSelected}
@@ -138,7 +154,7 @@ export default function Doctor() {
          name="patient_name"
          label="Patient Name"
          placeholder="Enter Patient Name"
-        
+        ref={patientNameRef}
         
        />
         <TextInput
@@ -146,6 +162,7 @@ export default function Doctor() {
          label="Appointment By"
          placeholder="Enter Appointment By"
         value={user?.name}
+       
         
        />
             <TextInput
@@ -168,12 +185,13 @@ export default function Doctor() {
       onChange={setValue}
       label="Appointment Date"
       placeholder="Enter Appointment Date"
+      ref={patientAppointmentDateRef}
     />
       <Textarea
          name="message"
          label="Reason for appointment"
          placeholder="Enter Reason"
-        
+         ref={appointmentReasonRef}
         
        />
 

@@ -84,14 +84,14 @@ import {
   }
 
     const submitMissingForm = async () => {
-      console.log(missingForm.values)
+     
       
-          const missingFormData :any= {
+          const missingFormDataMissing :any= {
             name: missingForm.values.name,
             description: missingForm.values.description,
             status: "not-found",
             images:[],
-            missingForm: missingForm.values.missingLocation,
+            missingLocation: missingForm.values.missingLocation,
             contactNumber: missingForm.values.contactNumber,
             dateOfDisappearance: missingForm.values.dateOfDisappearance,
             postedBy: {
@@ -101,6 +101,7 @@ import {
             
             },
           };
+          console.log(missingForm.values)
           const sendingForm:any = new FormData();
          
           for(let index=0; index<missingFile.length; index++)
@@ -110,9 +111,10 @@ import {
        sendingForm.append("images", element)
           }
          
-      sendingForm.append("name", JSON.stringify(missingFormData))
-      console.log(sendingForm.name)
+      sendingForm.append("name", JSON.stringify(missingFormDataMissing))
+   
           try {
+            console.log(sendingForm.name)
             const result = await postMissing(sendingForm);
             console.log(result)
             if (result?.data._id) {

@@ -53,7 +53,7 @@ export default function AddPost() {
    
      
     
-    },
+    }
   });
   const missingForm = useForm({
     initialValues: {
@@ -138,7 +138,27 @@ const onReset=()=>{
 }
   const submitForm = async () => {
 console.log(form.values)
-
+if(form.values.name==""||form.values.description==""||form.values.location==""||form.values.contactNumber==""||form.values.postedBy_email==""||form.values.postedBy_name=="")
+  {
+   
+    notifications.show({
+      title: "fill the blanks",
+      message: "",
+      autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
+      color: "yellow", // Set the notification color (optional)
+    });
+    return;
+  }
+  if(form.values.description.length<20)
+{
+  notifications.show({
+    title: "Description must be at least 20 letters",
+    message: "",
+    autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
+    color: "yellow", // Set the notification color (optional)
+  });
+  return;
+}
     const formData :any= {
       name: form.values.name,
       description: form.values.description,
@@ -167,12 +187,20 @@ sendingForm.append("name", JSON.stringify(formData))
     try {
       const result = await postAdoption(sendingForm);
       console.log(result)
-      if (result?.data._id) {
+      if (result?.status==200) {
         notifications.show({
           title: "Successfully added post",
           message: "",
           autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
           color: "yellow", // Set the notification color (optional)
+        });
+      }
+      else{
+        notifications.show({
+          title: "Something went wrong",
+          message: "try checking your input ex: images must be png/jpg/jpeg",
+          autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
+          color: "red", // Set the notification color (optional)
         });
       }
     } catch (error) {
@@ -186,13 +214,23 @@ sendingForm.append("name", JSON.stringify(formData))
   };
   const submitMissingForm = async () => {
     console.log(missingForm.values)
-    
+    if(missingForm.values.name==""||missingForm.values.description==""||missingForm.values.missingLocation==""||missingForm.values.contactNumber==""||missingForm.values.postedBy_email==""||missingForm.values.postedBy_name=="")
+      {
+        
+        notifications.show({
+          title: "Fill out all the blanks",
+          message: "",
+          autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
+          color: "yellow", // Set the notification color (optional)
+        });
+        return;
+      }
         const missingFormData :any= {
           name: missingForm.values.name,
           description: missingForm.values.description,
           status: "not-found",
           images:[],
-          missingForm: missingForm.values.missingLocation,
+          missingLocation: missingForm.values.missingLocation,
           contactNumber: missingForm.values.contactNumber,
           dateOfDisappearance: missingForm.values.dateOfDisappearance,
           postedBy: {

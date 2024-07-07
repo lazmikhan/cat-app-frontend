@@ -1,6 +1,23 @@
 const postDonate = async (formData: Object) => {
     try {
+   console.log(formData)
       const response = await fetch("http://localhost:5000/api/v1/donations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify(formData),
+      });
+
+      return response.json();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const postStripePayment = async (formData: Object) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/v1/donations//add-payment-stripe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,5 +64,5 @@ const postDonate = async (formData: Object) => {
     }
   };
   export {
-    postDonate,getAllDonations,deleteDonate
+    postDonate,getAllDonations,deleteDonate,postStripePayment
   }

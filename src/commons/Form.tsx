@@ -23,11 +23,7 @@ export default function Form() {
         {...form.getInputProps('email')}
       />
 
-      <Checkbox
-        mt="md"
-        label="I agree to sell my privacy"
-        {...form.getInputProps('termsOfService', { type: 'checkbox' })}
-      />
+    
 
       <Group justify="flex-end" mt="md">
         <Button type="submit">Submit</Button>

@@ -57,22 +57,23 @@ export default function MissingDetails() {
     <div className='Madimi'>
 <div>
 <Carousel withIndicators height={400}>
-      <Carousel.Slide>
-        <img style={{
-            width:'100%'
-        
-        }} src="https://img.freepik.com/free-photo/pattern-with-watercolor-flowers-vintage_1268-29266.jpg?size=626&ext=jpg" alt="" />
+    
+{
+    adoptionPost?.images?.map((image)=>(
+      <Carousel.Slide style={{
+        display:'flex',
+        justifyContent:'center'
+      }}>
+      <img style={{
+        textAlign:'center',
+          width:'20%',
+          height:'100%'
+      
+      }}    src={image?`http://localhost:5000/${image}`:""} alt="" />
 
-      </Carousel.Slide>
-      <Carousel.Slide> <img style={{
-            width:'100%'
-        
-        }} src="https://img.freepik.com/free-photo/abstract-grunge-decorative-relief-navy-blue-stucco-wall-texture-wide-angle-rough-colored-background_1258-28311.jpg?size=626&ext=jpg" alt=""  /></Carousel.Slide>
-      <Carousel.Slide>   <img style={{
-            width:'100%'
-        
-        }} src="https://img.freepik.com/free-photo/pattern-with-watercolor-flowers-vintage_1268-29266.jpg?size=626&ext=jpg" alt="" /></Carousel.Slide>
-      {/* ...other slides */}
+    </Carousel.Slide>
+    ))
+  }
     </Carousel>
 </div>
 <div>

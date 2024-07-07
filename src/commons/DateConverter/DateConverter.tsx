@@ -1,13 +1,16 @@
 const convertDate =(timestamp:string)=>{
 
    
-const date = new Date(timestamp);
+    const date = new Date(timestamp);
 
-const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
-
-console.log(formattedDate);
-return formattedDate;
+    // Extract the parts of the date
+    const year = date.getFullYear();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const day = date.getDate();
+    
+    // Construct the readable date format
+    const readableDate = `${year} ${month} ${day}`;
+return readableDate;
 }
 export {
     convertDate

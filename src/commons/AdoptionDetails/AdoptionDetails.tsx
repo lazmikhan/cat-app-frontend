@@ -1,13 +1,17 @@
 import { Carousel } from '@mantine/carousel';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import '@mantine/carousel/styles.css';
-import { Divider, Tabs, Text } from '@mantine/core';
+import { Button, Divider, Tabs, Text, TextInput, Textarea, Group, Container } from '@mantine/core';
 import { IconDetails, IconMessageCircle, IconPhoto, IconSettings, IconUser } from '@tabler/icons-react';
 import { getAllAdoptionPostsById } from '../../services/adoptService';
 import { IconUserBolt } from '@tabler/icons-react';
 import { convertDate } from '../DateConverter/DateConverter';
-
+import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import emailjs from '@emailjs/browser';
+import { DateInput } from '@mantine/dates';
+import { checkUser } from '../../services/apiCall';
 export default function AdoptionDetails() {
     interface AdoptionPost {
         _id: string;
@@ -27,6 +31,7 @@ export default function AdoptionDetails() {
 
     }
     const iconStyle = { width: "rem(12)", height: "rem(12)" };
+    const [user,setUser]= useState({name:'',email:''});
     const [adoptionPost, setAdoptionPost] = useState<AdoptionPost>({
         _id: '',
         name: '',
@@ -43,7 +48,15 @@ export default function AdoptionDetails() {
         updatedAt:'',
 
     });
-
+    const form = useForm({
+      initialValues: {
+      
+        reason:'',
+        dateOfAdoption:'',
+        location:'',
+        contactNumber:''
+      },
+    });
     const {id }= useParams();
     useEffect(()=>{
      const getPostById=async()=>{
@@ -52,30 +65,73 @@ export default function AdoptionDetails() {
         console.log(result)
      }
      getPostById();
+     const getUser = async ()=>{
+      const result = await checkUser();
+         setUser(result);
+     }
+     getUser();
     },[])
+    const [value, setValue] = useState<Date | null>(null);
+
+        const formJs: any = useRef();
+
+        const sendEmail = (e:any) => {
+          e.preventDefault();
+      
+          emailjs
+            .sendForm('service_xhd4uum', 'template_y3gaqyo', formJs.current, {
+              publicKey: 'fXAQrCrNnk-e_staU',
+            })
+            .then(
+              () => {
+                  notifications.show({
+                      title: 'Successfully sent request',
+                      message: '',
+                      autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
+                      color: 'yellow', // Set the notification color (optional)
+                    });
+              },
+              (error) => {
+                  notifications.show({
+                      title: 'Error sending request',
+                      message: error.text,
+                      autoClose: 5000, // Set the autoClose duration in milliseconds (optional)
+                      color: 'red', // Set the notification color (optional)
+                    });
+              },
+            );
+        };
   return (
     <div className='Madimi'>
 <div>
 <Carousel withIndicators height={400}>
-      <Carousel.Slide>
-        <img style={{
-            width:'100%'
-        
-        }} src="https://img.freepik.com/free-photo/pattern-with-watercolor-flowers-vintage_1268-29266.jpg?size=626&ext=jpg" alt="" />
+  {
+    adoptionPost.images.map((image)=>(
+      <Carousel.Slide style={{
+        display:'flex',
+        justifyContent:'center'
+      }}>
+      <img style={{
+        textAlign:'center',
+          width:'20%',
+          height:'100%'
+      
+      }}    src={image?`http://localhost:5000/${image}`:""} alt="" />
 
-      </Carousel.Slide>
-      <Carousel.Slide> <img style={{
-            width:'100%'
-        
-        }} src="https://img.freepik.com/free-photo/abstract-grunge-decorative-relief-navy-blue-stucco-wall-texture-wide-angle-rough-colored-background_1258-28311.jpg?size=626&ext=jpg" alt=""  /></Carousel.Slide>
-      <Carousel.Slide>   <img style={{
-            width:'100%'
-        
-        }} src="https://img.freepik.com/free-photo/pattern-with-watercolor-flowers-vintage_1268-29266.jpg?size=626&ext=jpg" alt="" /></Carousel.Slide>
-      {/* ...other slides */}
+    </Carousel.Slide>
+    ))
+  }
+      
     </Carousel>
 </div>
-<div>
+<div style={{
+display:'flex',
+justifyContent:'space-between',
+
+}}>
+<div style={{
+width:'50%'
+}}>
 <Tabs defaultValue="details">
       <Tabs.List>
     
@@ -104,7 +160,7 @@ export default function AdoptionDetails() {
        <span className='color-head'>Location:</span> {adoptionPost.location}
        <Divider my="md" />
      
-       <span className='color-head'>Posted At:</span> {adoptionPost.createdAt.slice(0,10)}
+       <span className='color-head'>Posted At:</span>{convertDate(adoptionPost.createdAt)} 
     
   
       </Text>
@@ -128,6 +184,51 @@ export default function AdoptionDetails() {
       </Text>
       </Tabs.Panel>
     </Tabs>
+</div>
+<div style={{
+  width:'50%'
+}}>
+
+      <Container >
+       <h1>Send Adoption Request</h1>
+         <Divider></Divider>
+         <form ref={formJs} onSubmit={sendEmail}>
+      
+            <TextInput
+         name="location"
+         label="Your location"
+         placeholder="Enter location"
+        {...form.getInputProps("location")}
+        
+       />
+         <DateInput
+         name="dateOfAdoption"
+      value={value}
+      onChange={setValue}
+      label=" Date of Adoption"
+      placeholder="Enter Adoption Date"
+    />
+      <Textarea
+         name="reason"
+         label="Reason for adoption"
+         placeholder="Enter Reason"
+        
+        
+       />
+
+       <input name='poster_email' hidden value={adoptionPost?.postedBy?.email} type="text"  />
+       <input name='poster_name' hidden value={adoptionPost?.postedBy?.name} type="text"  />
+       <input name='user_name' hidden value={user.name} type="text"  />
+       <input name='user_email' hidden value={user.email} type="text"  />
+
+       <br />
+       <Button color="yellow" type="submit">Request Adoption by email</Button>
+
+    </form>
+        </Container>: <></>
+    
+</div>
+
 </div>
    
     </div>
